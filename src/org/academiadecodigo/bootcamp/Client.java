@@ -10,16 +10,9 @@ import java.util.Scanner;
 public class Client {
 
     public static void main(String[] args) {
-        int port;
-        String hostName;
+        int port = 5000;
+        String hostName = "localhost";
         try {
-
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Hostname: ");
-            hostName = scanner.nextLine();
-            System.out.print("Port number: ");
-            port = Integer.parseInt(scanner.nextLine());
-
 
             Socket clientSocket = new Socket(hostName, port);
             System.out.println("Connection established with " + hostName + " on port " + port + "\n");
@@ -29,10 +22,7 @@ public class Client {
 
 
             while (clientSocket.isBound()) {
-                System.out.print("Your message: ");
-                String message = scanner.nextLine();
-                out.println(message);
-                System.out.println(in.readLine());
+
             }
 
         } catch (IOException e) {
