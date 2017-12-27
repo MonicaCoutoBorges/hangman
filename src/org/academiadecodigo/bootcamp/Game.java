@@ -65,6 +65,7 @@ public class Game {
                 String finalWord = hiddenWord.replace(" ", "");
 
                 if (finalWord.equals(wordToGuess)) {
+
                     hasWon = true;
                     System.out.println("Good job. You won the game.");
                 }
