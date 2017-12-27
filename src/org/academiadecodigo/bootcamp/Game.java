@@ -5,13 +5,13 @@ public class Game {
 
     public void init(){
 
-        //init gameserver
-        //createplayer
-
+        GameServer gameServer = new GameServer();
+        gameServer.start();
     }
 
     public void start() {
 
+        init();
     }
 
 }
