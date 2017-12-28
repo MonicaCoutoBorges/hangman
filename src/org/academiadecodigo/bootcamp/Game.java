@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp;
 
+import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.length;
+
 public class Game {
 
     private String wordToGuess;
@@ -25,11 +27,18 @@ public class Game {
         substituteWordCharacters();
 
         while (numberOfGuesses > 0 && !hasWon) {
-            char character = player2.chooseChar();
+            System.out.println("Enter a single character:");
+            String strEntered = "";
 
+            while ((strEntered = player2.chooseChar()).length() != 1) {
+                System.out.println("Enter one character only:");
+            }
+
+            char character = strEntered.charAt(0);
             if (!compareWords(character)) {
                 numberOfGuesses--;
             }
+            System.out.println(hiddenWord + numberOfGuesses + " left");
         }
 
         if (numberOfGuesses == 0) {
@@ -43,25 +52,18 @@ public class Game {
         for (int i = 0; i < wordToGuess.length(); i++) {
             hiddenWord += "_ ";
         }
-        System.out.println(hiddenWord);
+        System.out.println(hiddenWord + numberOfGuesses + " left");
     }
 
 
     private boolean compareWords(char character) {
-
-        boolean attempt = false;
-
+        boolean correctAttempt = false;
         for (int i = 0; i < wordToGuess.length(); i++) {
-
             if (wordToGuess.charAt(i) == character) {
-
                 hiddenWord = hiddenWord.substring(0, i * 2) + character + hiddenWord.substring(i * 2 + 1);
-
-                attempt = true;
+                correctAttempt = true;
             }
         }
-
-        System.out.println(hiddenWord);
 
         String finalWord = hiddenWord.replace(" ", "");
         if (finalWord.equals(wordToGuess)) {
@@ -69,6 +71,6 @@ public class Game {
             System.out.println("Good job. You won the game.");
         }
 
-        return attempt;
+        return correctAttempt;
     }
 }
