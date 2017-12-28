@@ -1,19 +1,22 @@
 package org.academiadecodigo.bootcamp;
 
+import java.net.Socket;
+
 public class Game {
 
+    private Server gameServer;
     private String wordToGuess;
     private String hiddenWord;
-    private Player player1 = new Player();
-    private Player player2 = new Player();
+    private Player player1;
+    private Player player2;
     private int numberOfGuesses = 6;
     private boolean hasWon;
 
 
     public void init() {
 
-        //init gameserver
-        //createplayer
+        //this.gameServer = new GameServer();
+        //gameServer.start();
 
     }
 
@@ -71,4 +74,17 @@ public class Game {
 
         return correctAttempt;
     }
+
+    public void createPlayer(int playerID, Socket playerSocket) {
+        if (playerID == 1) {
+            player1 = new Player(playerID, playerSocket);
+        }
+        if (playerID == 2) {
+            player2 = new Player(playerID, playerSocket);
+            start();
+        }
+
+    }
+
+
 }
