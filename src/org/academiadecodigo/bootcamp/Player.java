@@ -16,10 +16,22 @@ public class Player {
         return wordToGuess;
     }
 
-    public char play(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a letter:");
-        char characterEntered = scanner.next().charAt(0);
+    public char chooseChar(){
+        char characterEntered = '\u0000';
+        String strEntered = "";
+        while(strEntered.length() != 1){
+            Scanner scanner = new Scanner(System.in);
+            strEntered = scanner.next();
+
+            if(strEntered.length() != 1){
+                System.out.println("Enter one character only:");
+            }
+            else{
+                System.out.println("Enter a letter:");
+            }
+            characterEntered = strEntered.charAt(0);
+        }
+
         return characterEntered;
     }
 
