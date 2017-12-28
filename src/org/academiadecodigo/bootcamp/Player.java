@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Player {
 
     private String name;
+    public int playerID;
 
 
     public String setWordToGuess() {
@@ -22,4 +23,9 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getPlayerID(){
+        return playerID;
+    }
+
 }

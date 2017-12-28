@@ -1,7 +1,5 @@
 package org.academiadecodigo.bootcamp;
 
-import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.length;
-
 public class Game {
 
     private String wordToGuess;
