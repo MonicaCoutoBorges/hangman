@@ -13,12 +13,12 @@ class Game {
 
     void init()
     {
-        numberOfGuesses = 6;
         while(numberOfRounds != 4){
+            numberOfGuesses = 6;
             start();
             numberOfRounds++;
         }
-        sendToAllPlayers("GAME OVER");
+        sendToAllPlayers("\r\nGAME OVER");
     }
 
     private void start() {
@@ -35,11 +35,11 @@ class Game {
             String strEntered = "";
 
             strEntered = player2.chooseChar();
-            /*
-            while ((strEntered = player2.chooseChar()).length() != 1) {
+
+            /*while ((strEntered = player2.chooseChar()).length() != 1) {
                 player2.sendMessage("Only one character allowed!");
-            }
-            */
+            }*/
+
 
             char character = strEntered.charAt(0);
             if (!compareWords(character)) {
