@@ -54,6 +54,11 @@ public class ClientHandler implements Runnable {
         outPrintWriter.println(message);
     }
 
+    void sendMessageToPlayerInline(String message)
+    {
+        outPrintWriter.print(message);
+    }
+
     void updateGraphics(String message) {
         clearConsole();
         outPrintWriter.println(message);

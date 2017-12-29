@@ -26,6 +26,10 @@ class Player {
     {
         ch.sendMessageToPlayer(message);
     }
+    void sendMessageInline(String message)
+    {
+        ch.sendMessageToPlayerInline(message);
+    }
 
     void updatePlayerTerminal(String str)
     {
