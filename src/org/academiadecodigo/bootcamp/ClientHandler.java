@@ -1,9 +1,6 @@
 package org.academiadecodigo.bootcamp;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
@@ -34,9 +31,22 @@ public class ClientHandler implements Runnable {
     public void run()
     {
         // Welcome message
+        /*
         outPrintWriter.println("******************************");
         outPrintWriter.println("****  Welcome to HANGMAN  ****");
         outPrintWriter.println("******************************\r\n");
+        */
+        try {
+            String logo = Prints.welcome();
+            BufferedReader reader = new BufferedReader(new StringReader(logo));
+            String str;
+            while ((str = reader.readLine()) != null) {
+                outPrintWriter.println(str);
+            }
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void sendMessageToPlayer(String message)
