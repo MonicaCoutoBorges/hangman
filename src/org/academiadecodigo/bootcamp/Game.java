@@ -23,6 +23,7 @@ class Game {
             numberOfRounds++;
         }
         sendToAllPlayers("\r\nGAME OVER");
+        SoundEffects.winningTheme();
     }
 
     private void start() {
