@@ -14,10 +14,11 @@ class Game {
     void init()
     {
         numberOfGuesses = 6;
-        if(numberOfRounds != 4){
+        while(numberOfRounds != 4){
             start();
             numberOfRounds++;
         }
+        sendToAllPlayers("GAME OVER");
     }
 
     private void start() {
@@ -52,12 +53,15 @@ class Game {
             player1.sendMessage("Yeeaahh! Your opponent failed miserably.");
         }
 
-        sendToAllPlayers("\r\n..... Changing roles .....");
-        player1.sendMessage("You'll be guessing your opponent chosen word.\r\n");
-        player2.sendMessage("You'll be setting a word for your opponent to guess.\r\n");
+        if(numberOfRounds != 3) {
+            sendToAllPlayers("\r\n..... Changing roles .....");
+            player1.sendMessage("You'll be guessing your opponent chosen word.\r\n");
+            player2.sendMessage("You'll be setting a word for your opponent to guess.\r\n");
+        }
 
         activePlayerIndex = Math.abs(activePlayerIndex-1);
-        init();
+        hasWonRound = false;
+        //init();
     }
 
 
