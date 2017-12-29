@@ -4,32 +4,41 @@ class Game {
 
     private String wordToGuess;
     private String hiddenWord;
-    private Player player1;
-    private Player player2;
+    private Player players[] = new Player[2];
+    private int activePlayerIndex = 0;
     private int numberOfGuesses = 6;
-    private boolean hasWon;
+    private int numberOfRounds = 0;
+    private boolean hasWonRound;
 
 
-    private void init()
+    void init()
     {
-        //Does nothing so far...
+        numberOfGuesses = 6;
+        if(numberOfRounds != 4){
+            start();
+            numberOfRounds++;
+        }
     }
 
-    void start() {
+    private void start() {
 
-        init();
+        Player player1 = players[Math.abs(activePlayerIndex)];
+        Player player2 = players[Math.abs(activePlayerIndex-1)];
 
-        player2.sendMessage("Player 1 is choosing word for you to guess...");
+        player2.sendMessage("Your opponent is choosing word for you to guess...");
         wordToGuess = player1.setWordToGuess();
         sendToAllPlayers("Word has been set. Guessing begins...");
         substituteWordCharacters();
 
-        while (numberOfGuesses > 0 && !hasWon) {
+        while (numberOfGuesses > 0 && !hasWonRound) {
             String strEntered = "";
 
+            strEntered = player2.chooseChar();
+            /*
             while ((strEntered = player2.chooseChar()).length() != 1) {
                 player2.sendMessage("Only one character allowed!");
             }
+            */
 
             char character = strEntered.charAt(0);
             if (!compareWords(character)) {
@@ -40,8 +49,15 @@ class Game {
 
         if (numberOfGuesses == 0) {
             player2.sendMessage("Fuck you, you lose.");
-            player1.sendMessage("Yeeaahh! Player 2 failed miserably.");
+            player1.sendMessage("Yeeaahh! Your opponent failed miserably.");
         }
+
+        sendToAllPlayers("\r\n..... Changing roles .....");
+        player1.sendMessage("You'll be guessing your opponent chosen word.\r\n");
+        player2.sendMessage("You'll be setting a word for your opponent to guess.\r\n");
+
+        activePlayerIndex = Math.abs(activePlayerIndex-1);
+        init();
     }
 
 
@@ -67,9 +83,9 @@ class Game {
 
         String finalWord = hiddenWord.replace(" ", "");
         if (finalWord.equals(wordToGuess)) {
-            hasWon = true;
-            player2.sendMessage("Good job. You won the game.");
-            player1.sendMessage("\r\nSadly, Player 2 won the game :(");
+            hasWonRound = true;
+            players[Math.abs(activePlayerIndex-1)].sendMessage("Good job. You won the game.");
+            players[Math.abs(activePlayerIndex)].sendMessage("\r\nSadly, your opponent won the game :(");
         }
 
         return correctAttempt;
@@ -78,8 +94,9 @@ class Game {
 
     private void sendToAllPlayers(String str)
     {
-        player1.sendMessage(str);
-        player2.sendMessage(str);
+        for (Player player: players) {
+            player.sendMessage(str);
+        }
     }
 
 
@@ -87,10 +104,10 @@ class Game {
     {
         switch (playerID){
             case 1:
-                    player1 = new Player(1, clientHandler);
+                    players[0] = new Player(0, clientHandler);
                     break;
             case 2:
-                    player2 = new Player(2, clientHandler);
+                    players[1] = new Player(1, clientHandler);
                     break;
             default:
                     System.out.println("Something went wrong. Invalid player instantiation!");
