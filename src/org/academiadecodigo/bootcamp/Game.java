@@ -13,6 +13,8 @@ class Game {
 
     void init()
     {
+        SoundEffects.theme();
+
         while(numberOfRounds != 4){
             numberOfGuesses = 6;
             start();
@@ -51,6 +53,7 @@ class Game {
         if (numberOfGuesses == 0) {
             player2.sendMessage("Fuck you, you lose.");
             player1.sendMessage("Yeeaahh! Your opponent failed miserably.");
+            SoundEffects.hang();
         }
 
         if(numberOfRounds != 3) {
@@ -90,6 +93,7 @@ class Game {
             hasWonRound = true;
             players[Math.abs(activePlayerIndex-1)].sendMessage("Good job. You won the game.");
             players[Math.abs(activePlayerIndex)].sendMessage("\r\nSadly, your opponent won the game :(");
+            SoundEffects.clap();
         }
 
         return correctAttempt;

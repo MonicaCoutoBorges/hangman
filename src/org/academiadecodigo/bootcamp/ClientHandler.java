@@ -75,6 +75,7 @@ public class ClientHandler implements Runnable {
         try {
             outPrintWriter.println("\nNext letter to guess:");
             rturn = inBufferReader.readLine();
+            SoundEffects.keyPressed();
         } catch (IOException e) {
             e.printStackTrace();
         }
