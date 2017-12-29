@@ -1,4 +1,3 @@
-
 package org.academiadecodigo.bootcamp;
 
 import java.net.ServerSocket;
@@ -15,33 +14,35 @@ public class GameServer {
     private final static int portNumber = 9000;
     private final List<ClientHandler> clientHandlers = Collections.synchronizedList(new ArrayList<ClientHandler>());
 
-    public void start() {
+    void start()
+    {
         ServerSocket serverSocket = null;
-        ExecutorService cachedPool = Executors.newCachedThreadPool();
-        int clientIdCount = 1;
+        Game game = new Game();
+        int clientsCount = 1;
+        ExecutorService fixedPool = Executors.newFixedThreadPool(2);
 
         try {
             // Bind to local port and block while waiting for client connections
             serverSocket = new ServerSocket(portNumber);
             System.out.println("GameServer ON.");
 
-            while (clientIdCount < 3) {
+            while (!serverSocket.isClosed()) {
 
                 Socket clientSocket = serverSocket.accept();
-
                 System.out.println("Connection established with: " + clientSocket.getRemoteSocketAddress());
 
-                ClientHandler clientHandler = new ClientHandler(clientSocket, this, clientIdCount);
-                clientHandlers.add(clientHandler);
-                clientIdCount++;
-
-                cachedPool.submit(clientHandler);
+                // create clientHandler and add it to the List
+                    ClientHandler clientHandler = new ClientHandler(clientSocket);
+                    clientHandlers.add(clientHandler);
+                // add to thread pool
+                    fixedPool.submit(clientHandler);
+                // create player
+                    game.createPlayer(clientsCount, clientHandler);
+                // increment clients count
+                    clientsCount++;
+                // Start game
+                if (clientsCount > 2){ game.start(); }
             }
-
-            while (!serverSocket.isClosed()) {
-                // What the hell do i do here
-            }
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,35 +58,8 @@ public class GameServer {
         }
     }
 
-    public void sendAll(String consoleOutput) {
-        for (ClientHandler ch : clientHandlers) {
-            ch.updateConsole(consoleOutput);
-        }
-    }
-
-    public String chooseLetterToGuess(Player player) {
-        String ret = "";
-        for (ClientHandler ch : clientHandlers) {
-            if (ch.getClientID() == player.getPlayerID()) {
-                ret = ch.inputLetterToGuess();
-                break;
-            }
-        }
-        return ret;
-    }
-
-    public String chooseStringToGuess(Player player) {
-        String ret = "";
-        for (ClientHandler ch : clientHandlers) {
-            if (ch.getClientID() == player.getPlayerID()) {
-                ret = ch.inputStringToGuess();
-                break;
-            }
-        }
-        return ret;
-    }
-
-    public void closeServer() {
+    public void closeServer()
+    {
 
     }
 

@@ -1,30 +1,41 @@
 package org.academiadecodigo.bootcamp;
 
-import java.util.Scanner;
+class Player {
 
-public class Player {
+    private final int playerID;
+    private final ClientHandler ch;
 
-    private String name;
-    public int playerID;
-
-
-    public String setWordToGuess() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the word to be guessed:");
-        String wordToGuess = scanner.nextLine();
-        return wordToGuess;
+    //CONSTRUCTOR
+    public Player(int playerID, ClientHandler clientHandler){
+        this.playerID = playerID;
+        this.ch = clientHandler;
     }
 
-    public String chooseChar() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+    //METHODS
+    String setWordToGuess()
+    {
+        return ch.chooseStringToGuess("Please enter the word to be guessed:");
     }
 
-    public void setName(String name) {
-        this.name = name;
+    String chooseChar()
+    {
+        return ch.chooseLetter("Enter a single character:");
     }
 
-    public int getPlayerID(){
+    void sendMessage(String message)
+    {
+        ch.sendMessageToPlayer(message);
+    }
+
+    void updatePlayerTerminal(String str)
+    {
+        // Work In Progress...
+        ch.updateGraphics(str);
+    }
+
+
+    //GETTERS
+    int getPlayerID(){
         return playerID;
     }
 

@@ -8,19 +8,13 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
 
-    private final GameServer gameServer;
     private final Socket clientSocket;
-    private final int clientID;
-    private String name;
     private BufferedReader inBufferReader;
     private PrintWriter outPrintWriter;
 
     //CONSTRUCTOR
-    public ClientHandler(Socket clientSocket, GameServer gameServer, int clientID) {
-        this.gameServer = gameServer;
+    public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
-        this.clientID = clientID;
-        this.name = "p" + clientID;
 
         try {
             // Setup input stream
@@ -37,72 +31,48 @@ public class ClientHandler implements Runnable {
     // METHODS
 
     @Override
-    public void run() {
-        try {
-            // Welcome message
-            outPrintWriter.println("******************************");
-            outPrintWriter.println("***** Welcome to HANGMAN *****");
-            outPrintWriter.println("******************************");
-            // Ask for player name
-            outPrintWriter.println("\nEnter your name, " + name + " :");
-            // Wait for player name and set name
-            String receivePlayerName = inBufferReader.readLine();
-
-            outPrintWriter.println(name + " name set to " + receivePlayerName.toUpperCase());
-            this.name = receivePlayerName.toUpperCase();
-            outPrintWriter.println("\nLet's play!");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        while (clientSocket.isConnected()) {
-            /*
-            try {
-                String gameReceivedMessage = inBufferReader.readLine();
-                gameServer.sendAll(gameReceivedMessage);
-
-           } catch (IOException e) { e.printStackTrace(); }
-            */
-        }
+    public void run()
+    {
+        // Welcome message
+        outPrintWriter.println("******************************");
+        outPrintWriter.println("****  Welcome to HANGMAN  ****");
+        outPrintWriter.println("******************************\r\n");
     }
 
-    public void updateConsole(String message) {
+    void sendMessageToPlayer(String message)
+    {
+        outPrintWriter.println(message);
+    }
+
+    void updateGraphics(String message) {
         clearConsole();
         outPrintWriter.println(message);
     }
 
-    public static void clearConsole() {
-        System.out.print("\033[H\033[2J");
-    }
-
-    public String inputStringToGuess() {
-        String ret = "";
+    String chooseStringToGuess(String str) {
+        String rturn = "";
         try {
-            outPrintWriter.println("\nInput string for the other player to guess:");
-            ret = inBufferReader.readLine();
+            outPrintWriter.println(str);
+            rturn = inBufferReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return ret.toUpperCase();
+        return rturn.toUpperCase();
     }
 
-    public String inputLetterToGuess() {
-        String ret = "";
+    String chooseLetter(String str) {
+        String rturn = "";
         try {
             outPrintWriter.println("\nNext letter to guess:");
-            ret = inBufferReader.readLine();
+            rturn = inBufferReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return ret.toUpperCase();
+        return rturn.toUpperCase();
     }
 
-    //GETTERS
-    public int getClientID() {
-        return this.clientID;
+    private static void clearConsole() {
+        System.out.print("\033[H\033[2J");
     }
 
 }
