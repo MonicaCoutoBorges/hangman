@@ -42,4 +42,12 @@ public class SoundEffects {
             theme.play();
         }
     }
+
+    public static void winningTheme(){
+        TinySound.init();
+        Sound theme = TinySound.loadSound("winningTheme.wav");
+        for (int i = 0; i < 1; i++) {
+            theme.play();
+        }
+    }
 }
