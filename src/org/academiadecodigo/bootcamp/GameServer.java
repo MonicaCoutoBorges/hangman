@@ -14,6 +14,12 @@ public class GameServer {
     private final static int portNumber = 9000;
     private final List<ClientHandler> clientHandlers = Collections.synchronizedList(new ArrayList<ClientHandler>());
 
+    public static void main(String[] args)
+    {
+        GameServer gameServer = new GameServer();
+        gameServer.start();
+    }
+
     void start()
     {
         ServerSocket serverSocket = null;
@@ -41,7 +47,14 @@ public class GameServer {
                 // increment clients count
                     clientsCount++;
                 // Start game
-                if (clientsCount > 2){ game.start(); }
+                if (clientsCount > 2) {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    game.start();
+                }
             }
 
         } catch (IOException e) {
