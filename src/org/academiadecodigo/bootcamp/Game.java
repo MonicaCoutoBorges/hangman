@@ -20,21 +20,29 @@ class Game {
         SoundEffects.theme();
 
         while (numberOfRounds != 4) {
-             /* *** Start new round *** */
-            start();
+            start();    //start new round
             numberOfRounds++;
-            /* *** Reset *** */
-            hasWonRound = false;
-            numberOfGuesses = 6;
-            charsUsed.clear();
-            /* *** Change roles *** */
-            activePlayerIndex = Math.abs(activePlayerIndex - 1);
+            resetForNextRound();
         }
 
-        sendToAllPlayers("\r\n\r\n ========== GAME OVER ==========");
+        showResults();
 
-        // DO SOMETHING TO SHOW GAME RESULTS
         SoundEffects.winningTheme();
+    }
+
+    private void showResults()
+    {
+        sendToAllPlayers(Prints.gameOver());
+
+        if (playerVictories[0] > playerVictories[1]){
+            players[0].sendMessage(Prints.gameWinner());
+            players[1].sendMessage(Prints.gameLoser());
+        } else if (playerVictories[0] < playerVictories[1]) {
+            players[0].sendMessage(Prints.gameLoser());
+            players[1].sendMessage(Prints.gameWinner());
+        } else {
+            sendToAllPlayers(Prints.gameDraw());
+        }
     }
 
     private void start()
@@ -143,6 +151,16 @@ class Game {
         for (Player player : players) {
             player.sendMessageInline(str);
         }
+    }
+
+    private void resetForNextRound()
+    {
+        /* *** Reset *** */
+        hasWonRound = false;
+        numberOfGuesses = 6;
+        charsUsed.clear();
+        /* *** Change roles *** */
+        activePlayerIndex = Math.abs(activePlayerIndex - 1);
     }
 
     void createPlayer(int playerId, ClientHandler clientHandler) {

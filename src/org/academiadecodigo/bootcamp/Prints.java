@@ -9,4 +9,25 @@ public class Prints {
                 "\r\n\r\n";
     }
 
+    public static String gameOver()
+    {
+        return "\r\n\r\n ========== GAME OVER ==========";
+    }
+
+    public static String gameWinner()
+    {
+        return "\r\n\r\n >>> Congratulations, you have won the game! <<<";
+    }
+
+    public static String gameLoser()
+    {
+        return "\r\n\r\n >>> Sorry, you have lost the game! <<<";
+    }
+
+    public static String gameDraw()
+    {
+        return "\r\n\r\n >>> Game result is a Draw. Everybody is a winner! <<<";
+    }
+
+
 }
