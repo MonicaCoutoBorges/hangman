@@ -30,12 +30,6 @@ public class ClientHandler implements Runnable {
     @Override
     public void run()
     {
-        // Welcome message
-        /*
-        outPrintWriter.println("******************************");
-        outPrintWriter.println("****  Welcome to HANGMAN  ****");
-        outPrintWriter.println("******************************\r\n");
-        */
         try {
             String logo = Prints.welcome();
             BufferedReader reader = new BufferedReader(new StringReader(logo));
@@ -67,6 +61,7 @@ public class ClientHandler implements Runnable {
     String chooseStringToGuess(String str) {
         String rturn = "";
         try {
+            //outPrintWriter.print("\033[H\033[2J");
             outPrintWriter.println(str);
             rturn = inBufferReader.readLine();
         } catch (IOException e) {
@@ -78,13 +73,18 @@ public class ClientHandler implements Runnable {
     String chooseLetter(String str) {
         String rturn = "";
         try {
-            outPrintWriter.println("\nNext letter to guess:");
+            outPrintWriter.println(str);
             rturn = inBufferReader.readLine();
             SoundEffects.keyPressed();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return rturn.toUpperCase();
+    }
+
+    void streamIt(String str)
+    {
+        outPrintWriter.println(str);
     }
 
     private static void clearConsole() {

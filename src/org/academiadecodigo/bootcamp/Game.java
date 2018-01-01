@@ -4,41 +4,51 @@ import java.util.ArrayList;
 
 class Game {
 
+    private Player players[] = new Player[2];
+    private int playerVictories[] = new int[2];
+    private int activePlayerIndex = 1;
     private String wordToGuess;
     private String hiddenWord;
-    private Player players[] = new Player[2];
-    private int activePlayerIndex = 0;
     private int numberOfGuesses = 6;
     private int numberOfRounds = 0;
     private ArrayList<Character> charsUsed = new ArrayList<>();
     private boolean hasWonRound;
 
 
-    void init() {
+    void init()
+    {
         SoundEffects.theme();
 
         while (numberOfRounds != 4) {
-            numberOfGuesses = 6;
+             /* *** Start new round *** */
             start();
             numberOfRounds++;
+            /* *** Reset *** */
+            hasWonRound = false;
+            numberOfGuesses = 6;
+            charsUsed.clear();
+            /* *** Change roles *** */
+            activePlayerIndex = Math.abs(activePlayerIndex - 1);
         }
-        sendToAllPlayers("\r\nGAME OVER");
+
+        sendToAllPlayers("\r\n\r\n ========== GAME OVER ==========");
+
+        // DO SOMETHING TO SHOW GAME RESULTS
         SoundEffects.winningTheme();
     }
 
-    private void start() {
+    private void start()
+    {
+        Player player1 = players[Math.abs(activePlayerIndex - 1)];
+        Player player2 = players[activePlayerIndex];
 
-        Player player1 = players[Math.abs(activePlayerIndex)];
-        Player player2 = players[Math.abs(activePlayerIndex - 1)];
-
-        player2.sendMessage("Your opponent is choosing word for you to guess...");
+        player2.sendMessage(" Your opponent is choosing word for you to guess...");
         wordToGuess = player1.setWordToGuess();
-        sendToAllPlayers("Word has been set. Guessing begins...");
+        sendToAllPlayers(" Word has been set. Guessing begins...\r\n\r\n");
         substituteWordCharacters();
 
         while (numberOfGuesses > 0 && !hasWonRound) {
             String strEntered = "";
-
 
             //strEntered = player2.chooseChar();
             //char character = strEntered.charAt(0);
@@ -47,28 +57,30 @@ class Game {
             charsUsed.add(character);
             printUsedChars();
 
-
             if (!compareWords(character)) {
                 numberOfGuesses--;
             }
-            sendToAllPlayers("\r\n" + hiddenWord + "   [" + numberOfGuesses + " chances left]");
+            sendToAllPlayers("\r\n " + hiddenWord + "   [" + numberOfGuesses + " chances left]");
         }
 
-        if (numberOfGuesses == 0) {
-            player2.sendMessage("Fuck you, you lose.");
-            player1.sendMessage("Yeeaahh! Your opponent failed miserably.");
+        if (hasWonRound){
+            playerVictories[activePlayerIndex]++;
+            player2.sendMessage("\r\n ::: Good job. You won this round! :::");
+            player1.sendMessage("\r\n ::: Sadly, your opponent won this round. :::");
+        } else {
+            playerVictories[Math.abs(activePlayerIndex - 1)]++;
+            player2.sendMessage("\r\n ::: Fuck you, you lost this round. :::");
+            player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably on this round. :::");
             SoundEffects.hang();
         }
 
         if (numberOfRounds != 3) {
-            sendToAllPlayers("\r\n..... Changing roles .....");
-            player1.sendMessage("You'll be guessing your opponent chosen word.\r\n");
-            player2.sendMessage("You'll be setting a word for your opponent to guess.\r\n");
+            sendToAllPlayers("\r\n\r\n------------------------------------------------------");
+            sendToAllPlayers(" ................. CHANGING ROLES .................");
+            player1.sendMessage(" You'll be guessing your opponent's chosen word.");
+            player2.sendMessage(" You'll be setting a word for your opponent to guess.");
+            sendToAllPlayers("------------------------------------------------------\r\n");
         }
-
-        activePlayerIndex = Math.abs(activePlayerIndex - 1);
-        hasWonRound = false;
-        charsUsed.clear();
     }
 
 
@@ -77,7 +89,7 @@ class Game {
         for (int i = 0; i < wordToGuess.length(); i++) {
             hiddenWord += "_ ";
         }
-        sendToAllPlayers(hiddenWord + "   [" + numberOfGuesses + " chances left]");
+        sendToAllPlayers(" " + hiddenWord + "   [" + numberOfGuesses + " chances leftT]");
     }
 
 
@@ -93,8 +105,8 @@ class Game {
         String finalWord = hiddenWord.replace(" ", "");
         if (finalWord.equals(wordToGuess)) {
             hasWonRound = true;
-            players[Math.abs(activePlayerIndex - 1)].sendMessage("Good job. You won the game.");
-            players[Math.abs(activePlayerIndex)].sendMessage("\r\nSadly, your opponent won the game :(");
+            //players[Math.abs(activePlayerIndex - 1)].sendMessage(" Good job. You won this round!");
+            //players[activePlayerIndex].sendMessage("\r\n Sadly, your opponent won this round :(");
             SoundEffects.clap();
         }
 
@@ -107,7 +119,7 @@ class Game {
 
         for(Character letter : charsUsed) {
             if (letter.compareTo(character) == 0) {
-                sendToAllPlayers("\r\nThis letter has already been used.");
+                sendToAllPlayers("\r\n " + character + " has already been used.");
                 character = getUsedChars(player);
             }
         }
@@ -133,17 +145,16 @@ class Game {
         }
     }
 
-
-    void createPlayer(int playerID, ClientHandler clientHandler) {
-        switch (playerID) {
+    void createPlayer(int playerId, ClientHandler clientHandler) {
+        switch (playerId) {
             case 1:
-                players[0] = new Player(0, clientHandler);
+                players[0] = new Player(clientHandler);
                 break;
             case 2:
-                players[1] = new Player(1, clientHandler);
+                players[1] = new Player(clientHandler);
                 break;
             default:
-                System.out.println("Something went wrong. Invalid player instantiation!");
+                System.out.println(" Something went wrong. Invalid player instantiation!");
                 break;
         }
     }

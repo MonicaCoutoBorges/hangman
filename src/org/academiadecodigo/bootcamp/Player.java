@@ -2,30 +2,29 @@ package org.academiadecodigo.bootcamp;
 
 class Player {
 
-    private final int playerID;
     private final ClientHandler ch;
 
     //CONSTRUCTOR
-    public Player(int playerID, ClientHandler clientHandler){
-        this.playerID = playerID;
+    public Player(ClientHandler clientHandler){
         this.ch = clientHandler;
     }
 
     //METHODS
     String setWordToGuess()
     {
-        return ch.chooseStringToGuess("Please enter the word to be guessed:");
+        return ch.chooseStringToGuess(" Please enter the word to be guessed by your opponent:");
     }
 
     String chooseChar()
     {
-        return ch.chooseLetter("Enter a single character:");
+        return ch.chooseLetter("\n Next letter to guess:");
     }
 
     void sendMessage(String message)
     {
         ch.sendMessageToPlayer(message);
     }
+
     void sendMessageInline(String message)
     {
         ch.sendMessageToPlayerInline(message);
@@ -35,12 +34,6 @@ class Player {
     {
         // Work In Progress...
         ch.updateGraphics(str);
-    }
-
-
-    //GETTERS
-    int getPlayerID(){
-        return playerID;
     }
 
 }
