@@ -66,7 +66,6 @@ public class ClientHandler implements Runnable {
         try {
             outPrintWriter.println(str);
             rturn = inBufferReader.readLine();
-            SoundEffects.keyPressed();
         } catch (IOException e) {
             e.printStackTrace();
         }

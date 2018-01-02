@@ -52,7 +52,13 @@ class Game {
             charsUsed.add(character);
             //updateHanger();
 
-            if (!compareWords(character)) { numberOfMissesLeft -=1; }
+            if (!compareWords(character)) {
+                numberOfMissesLeft -=1;
+                SoundEffects.wrongAttempt();
+            }
+            else{
+                SoundEffects.correctAttempt();
+            }
 
             updateHanger();
             sendToAllPlayers("\r\n " + hiddenWord + "   [" + numberOfMissesLeft + " chances left]\r\n");

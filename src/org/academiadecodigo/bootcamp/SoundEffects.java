@@ -5,10 +5,20 @@ import org.academiadecodigo.bootcamp.kuusisto.tinysound.TinySound;
 
 public class SoundEffects {
 
-    public static void keyPressed() {
+    public static void correctAttempt() {
 
         TinySound.init();
         Sound key = TinySound.loadSound("key.wav");
+        for (int i = 0; i < 1; i++) {
+            key.play();
+
+        }
+    }
+
+    public static void wrongAttempt() {
+
+        TinySound.init();
+        Sound key = TinySound.loadSound("wrong.wav");
         for (int i = 0; i < 1; i++) {
             key.play();
 
