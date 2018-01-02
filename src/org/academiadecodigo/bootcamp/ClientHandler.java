@@ -19,9 +19,7 @@ public class ClientHandler implements Runnable {
             // Setup output stream
             this.outPrintWriter = new PrintWriter(this.clientSocket.getOutputStream(), true);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
 

@@ -31,7 +31,6 @@ class Game {
     }
 
 
-
     private void start()
     {
         Player player1 = players[Math.abs(activePlayerIndex - 1)];
@@ -43,12 +42,8 @@ class Game {
         substituteWordCharacters();
 
         while (numberOfMissesLeft > 0 && !hasWonRound) {
-            String strEntered = "";
-
             char character = getUsedChars(player2);
-
             charsUsed.add(character);
-            //updateHanger();
 
             if (!compareWords(character)) {
                 numberOfMissesLeft -=1;
@@ -158,11 +153,7 @@ class Game {
             // Put letters already chosen on hanger bottom
             hangerBottom = hangerBottom.replaceFirst("(\\*\\*)", letter + " ");
             // Put correspondent right / wrong guess of that letter on hanger bottom
-            if (wordToGuess.contains(letter.toString())){
-                hangerBottom = hangerBottom.replaceFirst("(==)", "v ");
-            } else {
-                hangerBottom = hangerBottom.replaceFirst("(==)", "x ");
-            }
+            hangerBottom = hangerBottom.replaceFirst("(==)", wordToGuess.contains(letter.toString()) ? "v " : "x ");
         }
 
         updateGraphics("\r\n\r\n\r\n" + hangerTop + hangerBottom);
@@ -171,17 +162,13 @@ class Game {
 
     private void updateGraphics(String strSrc)
     {
-        for (Player player : players) {
-            player.updatePlayerGraphics(strSrc);
-        }
+        for (Player player : players) { player.updatePlayerGraphics(strSrc); }
     }
 
 
     private void sendToAllPlayers(String str)
     {
-        for (Player player : players) {
-            player.sendMessage(str);
-        }
+        for (Player player : players) { player.sendMessage(str); }
     }
 
 
