@@ -155,7 +155,14 @@ class Game {
 
         String hangerBottom = Prints.hangBox();
         for (Character letter : charsUsed) {
-            hangerBottom = hangerBottom.replaceFirst("(==)", letter + " ");
+            // Put letters already chosen on hanger bottom
+            hangerBottom = hangerBottom.replaceFirst("(\\*\\*)", letter + " ");
+            // Put correspondent right / wrong guess of that letter on hanger bottom
+            if (wordToGuess.contains(letter.toString())){
+                hangerBottom = hangerBottom.replaceFirst("(==)", "v ");
+            } else {
+                hangerBottom = hangerBottom.replaceFirst("(==)", "x ");
+            }
         }
 
         updateGraphics("\r\n\r\n\r\n" + hangerTop + hangerBottom);
