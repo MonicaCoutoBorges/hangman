@@ -30,17 +30,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run()
     {
-        try {
-            String logo = Prints.welcome();
-            BufferedReader reader = new BufferedReader(new StringReader(logo));
-            String str;
-            while ((str = reader.readLine()) != null) {
-                outPrintWriter.println(str);
-            }
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        updateGraphics(Prints.welcome());
     }
 
     void sendMessageToPlayer(String message)
@@ -48,14 +38,15 @@ public class ClientHandler implements Runnable {
         outPrintWriter.println(message);
     }
 
-    void sendMessageToPlayerInline(String message)
+    void updateGraphics(String strSrc)
     {
-        outPrintWriter.print(message);
-    }
-
-    void updateGraphics(String message) {
-        clearConsole();
-        outPrintWriter.println(message);
+        try {
+            BufferedReader reader = new BufferedReader(new StringReader(strSrc));
+            String str;
+            while ((str = reader.readLine()) != null) {
+                outPrintWriter.println(str);
+            }
+        } catch(IOException e) { e.printStackTrace(); }
     }
 
     String chooseStringToGuess(String str) {
@@ -82,13 +73,14 @@ public class ClientHandler implements Runnable {
         return rturn.toUpperCase();
     }
 
-    void streamIt(String str)
-    {
-        outPrintWriter.println(str);
-    }
+    /*
+    void sendMessageToPlayerInline(String message){ outPrintWriter.print(message); }
+    */
 
+    /*
     private static void clearConsole() {
         System.out.print("\033[H\033[2J");
     }
+    */
 
 }

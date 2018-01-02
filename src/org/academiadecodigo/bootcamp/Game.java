@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 class Game {
 
-    private Player players[] = new Player[2];
-    private int playerVictories[] = new int[2];
+    private final Player players[] = new Player[2];
+    private final int victories[] = new int[2];
     private int activePlayerIndex = 1;
     private String wordToGuess;
     private String hiddenWord;
-    private int numberOfGuesses = 6;
+    private int numberOfMissesLeft = 6;
     private int numberOfRounds = 0;
     private ArrayList<Character> charsUsed = new ArrayList<>();
     private boolean hasWonRound;
@@ -30,20 +30,7 @@ class Game {
         SoundEffects.winningTheme();
     }
 
-    private void showResults()
-    {
-        sendToAllPlayers(Prints.gameOver());
 
-        if (playerVictories[0] > playerVictories[1]){
-            players[0].sendMessage(Prints.gameWinner());
-            players[1].sendMessage(Prints.gameLoser());
-        } else if (playerVictories[0] < playerVictories[1]) {
-            players[0].sendMessage(Prints.gameLoser());
-            players[1].sendMessage(Prints.gameWinner());
-        } else {
-            sendToAllPlayers(Prints.gameDraw());
-        }
-    }
 
     private void start()
     {
@@ -55,7 +42,7 @@ class Game {
         sendToAllPlayers(" Word has been set. Guessing begins...\r\n\r\n");
         substituteWordCharacters();
 
-        while (numberOfGuesses > 0 && !hasWonRound) {
+        while (numberOfMissesLeft > 0 && !hasWonRound) {
             String strEntered = "";
 
             //strEntered = player2.chooseChar();
@@ -63,27 +50,27 @@ class Game {
             char character = getUsedChars(player2);
 
             charsUsed.add(character);
-            printUsedChars();
+            //updateHanger();
 
-            if (!compareWords(character)) {
-                numberOfGuesses--;
-            }
-            sendToAllPlayers("\r\n " + hiddenWord + "   [" + numberOfGuesses + " chances left]");
+            if (!compareWords(character)) { numberOfMissesLeft -=1; }
+
+            updateHanger();
+            sendToAllPlayers("\r\n " + hiddenWord + "   [" + numberOfMissesLeft + " chances left]\r\n");
         }
 
         if (hasWonRound){
-            playerVictories[activePlayerIndex]++;
+            victories[activePlayerIndex]++;
             player2.sendMessage("\r\n ::: Good job. You won this round! :::");
             player1.sendMessage("\r\n ::: Sadly, your opponent won this round. :::");
         } else {
-            playerVictories[Math.abs(activePlayerIndex - 1)]++;
-            player2.sendMessage("\r\n ::: Fuck you, you lost this round. :::");
+            victories[Math.abs(activePlayerIndex - 1)]++;
+            player2.sendMessage("\r\n ::: Fuck. You lost this round! :::");
             player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably on this round. :::");
             SoundEffects.hang();
         }
 
         if (numberOfRounds != 3) {
-            sendToAllPlayers("\r\n\r\n------------------------------------------------------");
+            sendToAllPlayers("\r\n\r\n\r\n------------------------------------------------------");
             sendToAllPlayers(" ................. CHANGING ROLES .................");
             player1.sendMessage(" You'll be guessing your opponent's chosen word.");
             player2.sendMessage(" You'll be setting a word for your opponent to guess.");
@@ -92,12 +79,13 @@ class Game {
     }
 
 
-    private void substituteWordCharacters() {
+    private void substituteWordCharacters()
+    {
         hiddenWord = "";
         for (int i = 0; i < wordToGuess.length(); i++) {
             hiddenWord += "_ ";
         }
-        sendToAllPlayers(" " + hiddenWord + "   [" + numberOfGuesses + " chances leftT]");
+        sendToAllPlayers(" " + hiddenWord + "   [" + numberOfMissesLeft + " chances left]\r\n");
     }
 
 
@@ -113,13 +101,12 @@ class Game {
         String finalWord = hiddenWord.replace(" ", "");
         if (finalWord.equals(wordToGuess)) {
             hasWonRound = true;
-            //players[Math.abs(activePlayerIndex - 1)].sendMessage(" Good job. You won this round!");
-            //players[activePlayerIndex].sendMessage("\r\n Sadly, your opponent won this round :(");
             SoundEffects.clap();
         }
 
         return correctAttempt;
     }
+
 
     private char getUsedChars(Player player){
         String strEntered = player.chooseChar();
@@ -134,47 +121,102 @@ class Game {
         return character;
     }
 
-    private void printUsedChars(){
+
+    private void updateHanger()
+    {
+        String hangerTop = "";
+        switch (numberOfMissesLeft){
+            case 0:
+                hangerTop = Prints.hangerTop0();
+                break;
+            case 1:
+                hangerTop = Prints.hangerTop1();
+                break;
+            case 2:
+                hangerTop = Prints.hangerTop2();
+                break;
+            case 3:
+                hangerTop = Prints.hangerTop3();
+                break;
+            case 4:
+                hangerTop = Prints.hangerTop4();
+                break;
+            case 5:
+                hangerTop = Prints.hangerTop5();
+                break;
+            case 6:
+                hangerTop = Prints.hangerTop6();
+                break;
+        }
+
+        String hangerBottom = Prints.hangBox();
         for (Character letter : charsUsed) {
-            sendToAllPlayersInline(" " + letter + " ");
+            hangerBottom = hangerBottom.replaceFirst("(==)", letter + " ");
+        }
+
+        updateGraphics("\r\n\r\n\r\n" + hangerTop + hangerBottom);
+    }
+
+
+    private void updateGraphics(String strSrc)
+    {
+        for (Player player : players) {
+            player.updatePlayerGraphics(strSrc);
         }
     }
 
 
-    private void sendToAllPlayers(String str) {
+    private void sendToAllPlayers(String str)
+    {
         for (Player player : players) {
             player.sendMessage(str);
         }
     }
 
-    private void sendToAllPlayersInline(String str) {
-        for (Player player : players) {
-            player.sendMessageInline(str);
-        }
-    }
 
     private void resetForNextRound()
     {
         /* *** Reset *** */
         hasWonRound = false;
-        numberOfGuesses = 6;
+        numberOfMissesLeft = 6;
         charsUsed.clear();
         /* *** Change roles *** */
         activePlayerIndex = Math.abs(activePlayerIndex - 1);
     }
 
-    void createPlayer(int playerId, ClientHandler clientHandler) {
-        switch (playerId) {
-            case 1:
-                players[0] = new Player(clientHandler);
-                break;
-            case 2:
-                players[1] = new Player(clientHandler);
-                break;
-            default:
-                System.out.println(" Something went wrong. Invalid player instantiation!");
-                break;
+
+    private void showResults()
+    {
+        updateGraphics(Prints.gameOver());
+
+        players[0].sendMessage("\r\n\r\n You: " + victories[0] + " , Opponent: " + victories[1]);
+        players[1].sendMessage("\r\n\r\n You: " + victories[1] + " , Opponent: " + victories[0]);
+
+        if (victories[0] > victories[1]){
+            players[0].sendMessage(Prints.gameWinner());
+            players[1].sendMessage(Prints.gameLoser());
+        } else if (victories[0] < victories[1]) {
+            players[0].sendMessage(Prints.gameLoser());
+            players[1].sendMessage(Prints.gameWinner());
+        } else {
+            sendToAllPlayers(Prints.gameDraw());
         }
     }
 
+
+    void createPlayer(int playerId, ClientHandler clientHandler)
+    {
+        if (playerId <= 2){
+            players[playerId - 1] = new Player(clientHandler);
+        } else {
+            System.out.println(" Something went wrong. Invalid player instantiation!");
+        }
+    }
+
+    /*
+    private void sendToAllPlayersInline(String str) {
+        for (Player player : players) {
+            player.sendMessageInline(str);
+        }
+    }*/
 }

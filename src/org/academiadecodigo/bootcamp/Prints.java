@@ -1,33 +1,123 @@
 package org.academiadecodigo.bootcamp;
 
-public class Prints {
+class Prints {
 
-    public static String welcome()
+    static String welcome()
     {
         return "___________.._______\r\n| .__________))______|\r\n| | / /      ||\r\n| |/ /       ||\r\n| | /        ||.-''.\r\n| |/         |/  _  \\\r\n| |          ||  `/,|\r\n| |          (\\\\`_.'\r\n| |         .-`--'.\r\n| |        /Y . . Y\\\r\n| |       // |   | \\\\\r\n| |      //  | . |  \\\\\r\n| |     ')   |   |   (`\r\n| |          ||'||\r\n| |          || ||\r\n| |          || ||\r\n| |          || ||\r\n| |         / | | \\\r\n\"\"\"\"\"\"\"\"\"\"|_`-' `-' |\"\"\"|\r\n|\"|\"\"\"\"\"\"\"\\ \\       '\"|\"|\r\n| |        \\ \\        | |\r\n: :         \\ \\       : :  \r\n. .          `'       . ." +
                 "_                                             \r\n| |                                            \r\n| |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  \r\n| '_ \\ / _` | '_ \\ / _` | '_ ` _ \\ / _` | '_ \\ \r\n| | | | (_| | | | | (_| | | | | | | (_| | | | |\r\n|_| |_|\\__,_|_| |_|\\__, |_| |_| |_|\\__,_|_| |_|\r\n                    __/ |                      \r\n                   |___/" +
                 "\r\n\r\n";
     }
 
-    public static String gameOver()
+    static String hangerTop0()
     {
-        return "\r\n\r\n ========== GAME OVER ==========";
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||      /H\\            \r\n" +
+                "            ||      / \\            \r\n" +
+                "            ||                     \r\n";
     }
 
-    public static String gameWinner()
+    static String hangerTop1()
     {
-        return "\r\n\r\n >>> Congratulations, you have won the game! <<<";
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||      / \\            \r\n" +
+                "            ||      / \\             \r\n" +
+                "            ||                     \r\n";
     }
 
-    public static String gameLoser()
+    static String hangerTop2()
     {
-        return "\r\n\r\n >>> Sorry, you have lost the game! <<<";
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||      / \\            \r\n" +
+                "            ||      /              \r\n" +
+                "            ||                     \r\n";
     }
 
-    public static String gameDraw()
+    static String hangerTop3()
+    {
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||      / \\            \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n";
+    }
+
+    static String hangerTop4()
+    {
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||      /              \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n";
+    }
+
+    static String hangerTop5()
+    {
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||       O             \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n";
+    }
+
+    static String hangerTop6()
+    {
+        return "" +
+                "           ____________            \r\n" +
+                "            ||       |             \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n" +
+                "            ||                     \r\n";
+    }
+
+    static String hangBox()
+    {
+        return "" +
+                "   _________||___________________________	    \r\n" +
+                "  /         ||                          /|	    \r\n" +
+                " /_____________________________________/ |	    \r\n" +
+                " |-------------------------------------| |	    \r\n" +
+                " | =================================== | /	    \r\n" +
+                " |_____________________________________|/	    \r\n";
+    }
+
+    static String gameOver()
+    {
+        return "\r\n\r\n" +
+                "\r\n ===================================================" +
+                "\r\n ===================  GAME OVER  ===================" +
+                "\r\n ===================================================";
+    }
+
+    static String gameWinner()
+    {
+        return "\r\n\r\n    >>> Congratulations, you have won the game! <<<";
+    }
+
+    static String gameLoser()
+    {
+        return "\r\n\r\n          >>> Sorry, you have lost the game! <<<";
+    }
+
+    static String gameDraw()
     {
         return "\r\n\r\n >>> Game result is a Draw. Everybody is a winner! <<<";
     }
-
 
 }

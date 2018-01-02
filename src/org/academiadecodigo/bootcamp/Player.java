@@ -9,6 +9,7 @@ class Player {
         this.ch = clientHandler;
     }
 
+
     //METHODS
     String setWordToGuess()
     {
@@ -17,7 +18,7 @@ class Player {
 
     String chooseChar()
     {
-        return ch.chooseLetter("\n Next letter to guess:");
+        return ch.chooseLetter("\r\n\r\n Next letter to guess:");
     }
 
     void sendMessage(String message)
@@ -25,15 +26,13 @@ class Player {
         ch.sendMessageToPlayer(message);
     }
 
-    void sendMessageInline(String message)
+    void updatePlayerGraphics(String strSrc)
     {
-        ch.sendMessageToPlayerInline(message);
+        ch.updateGraphics(strSrc);
     }
 
-    void updatePlayerTerminal(String str)
-    {
-        // Work In Progress...
-        ch.updateGraphics(str);
-    }
+    /*
+    void sendMessageInline(String message){ ch.sendMessageToPlayerInline(message); }
+    */
 
 }

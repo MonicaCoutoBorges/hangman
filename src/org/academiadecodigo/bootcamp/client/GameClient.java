@@ -10,7 +10,7 @@ public class GameClient {
     public static void main(String[] args) {
 
         String hostName = "localhost";
-        int portNumber = 9000;
+        int portNumber = 9444;
         Socket clientSocket = null;
         BufferedReader inBufferReader = null;
 
