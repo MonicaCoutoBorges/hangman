@@ -52,7 +52,6 @@ public class ClientHandler implements Runnable {
     String chooseStringToGuess(String str) {
         String rturn = "";
         try {
-            //outPrintWriter.print("\033[H\033[2J");
             outPrintWriter.println(str);
             rturn = inBufferReader.readLine();
         } catch (IOException e) {
@@ -71,15 +70,5 @@ public class ClientHandler implements Runnable {
         }
         return rturn.toUpperCase();
     }
-
-    /*
-    void sendMessageToPlayerInline(String message){ outPrintWriter.print(message); }
-    */
-
-    /*
-    private static void clearConsole() {
-        System.out.print("\033[H\033[2J");
-    }
-    */
 
 }

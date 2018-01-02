@@ -45,8 +45,6 @@ class Game {
         while (numberOfMissesLeft > 0 && !hasWonRound) {
             String strEntered = "";
 
-            //strEntered = player2.chooseChar();
-            //char character = strEntered.charAt(0);
             char character = getUsedChars(player2);
 
             charsUsed.add(character);
@@ -219,10 +217,4 @@ class Game {
         }
     }
 
-    /*
-    private void sendToAllPlayersInline(String str) {
-        for (Player player : players) {
-            player.sendMessageInline(str);
-        }
-    }*/
 }

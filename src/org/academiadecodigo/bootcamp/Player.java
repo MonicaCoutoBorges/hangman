@@ -31,8 +31,4 @@ class Player {
         ch.updateGraphics(strSrc);
     }
 
-    /*
-    void sendMessageInline(String message){ ch.sendMessageToPlayerInline(message); }
-    */
-
 }
