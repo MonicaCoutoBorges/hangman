@@ -36,9 +36,9 @@ class Game {
         Player player1 = players[Math.abs(activePlayerIndex - 1)];
         Player player2 = players[activePlayerIndex];
 
-        player2.sendMessage(" Your opponent is choosing word for you to guess...");
+        player2.sendMessage(" Your opponent is choosing a word for you to guess...");
         wordToGuess = player1.setWordToGuess();
-        sendToAllPlayers(" Word has been set. Guessing begins...\r\n\r\n");
+        sendToAllPlayers(" Word has been set. Let the guessing game begin...\r\n\r\n");
         substituteWordCharacters();
 
         while (numberOfMissesLeft > 0 && !hasWonRound) {
@@ -59,19 +59,19 @@ class Game {
 
         if (hasWonRound){
             victories[activePlayerIndex]++;
-            player2.sendMessage("\r\n ::: Good job. You won this round! :::");
+            player2.sendMessage("\r\n ::: Good job. You won this round! Don't lose focus now! :::");
             player1.sendMessage("\r\n ::: Sadly, your opponent won this round. :::");
         } else {
             victories[Math.abs(activePlayerIndex - 1)]++;
-            player2.sendMessage("\r\n ::: Fuck. You lost this round! :::");
-            player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably on this round. :::");
+            player2.sendMessage("\r\n ::: Fuck. You lost this round! Sorry, man! Errr... Woman. Well... Person! :::");
+            player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably in this round. Do the victory dance! :::");
             SoundEffects.hang();
         }
 
         if (numberOfRounds != 3) {
             sendToAllPlayers("\r\n\r\n\r\n------------------------------------------------------");
             sendToAllPlayers(" ................. CHANGING ROLES .................");
-            player1.sendMessage(" You'll be guessing your opponent's chosen word.");
+            player1.sendMessage(" You'll be guessing the word chosen by your opponent.");
             player2.sendMessage(" You'll be setting a word for your opponent to guess.");
             sendToAllPlayers("------------------------------------------------------\r\n");
         }
