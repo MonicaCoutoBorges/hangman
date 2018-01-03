@@ -31,26 +31,19 @@ class Game {
     }
 
 
-
     private void start()
     {
         Player player1 = players[Math.abs(activePlayerIndex - 1)];
         Player player2 = players[activePlayerIndex];
 
-        player2.sendMessage(" Your opponent is choosing word for you to guess...");
+        player2.sendMessage(" Your opponent is choosing a word for you to guess...");
         wordToGuess = player1.setWordToGuess();
-        sendToAllPlayers(" Word has been set. Guessing begins...\r\n\r\n");
+        sendToAllPlayers(" Word has been set. Let the guessing game begin...\r\n\r\n");
         substituteWordCharacters();
 
         while (numberOfMissesLeft > 0 && !hasWonRound) {
-            String strEntered = "";
-
-            //strEntered = player2.chooseChar();
-            //char character = strEntered.charAt(0);
             char character = getUsedChars(player2);
-
             charsUsed.add(character);
-            //updateHanger();
 
             if (!compareWords(character)) {
                 numberOfMissesLeft -=1;
@@ -66,20 +59,25 @@ class Game {
 
         if (hasWonRound){
             victories[activePlayerIndex]++;
-            player2.sendMessage("\r\n ::: Good job. You won this round! :::");
+            player2.sendMessage("\r\n ::: Good job. You won this round! Don't lose focus now! :::");
             player1.sendMessage("\r\n ::: Sadly, your opponent won this round. :::");
         } else {
             victories[Math.abs(activePlayerIndex - 1)]++;
+<<<<<<< HEAD
             player2.sendMessage("\r\n ::: Fuck. You lost this round! :::");
             player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably on this round. :::");
             player2.sendMessage("\r\n ::: The word was \u001B[33m" + wordToGuess + " \u001B[37m:::");
+=======
+            player2.sendMessage("\r\n ::: Fuck. You lost this round! Sorry, man! Errr... Woman. Well... Person! :::");
+            player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably in this round. Do the victory dance! :::");
+>>>>>>> 69662ef0f929bd25c9a510c305a5188d24a1de79
             SoundEffects.hang();
         }
 
         if (numberOfRounds != 3) {
             sendToAllPlayers("\r\n\r\n\r\n------------------------------------------------------");
             sendToAllPlayers(" ................. CHANGING ROLES .................");
-            player1.sendMessage(" You'll be guessing your opponent's chosen word.");
+            player1.sendMessage(" You'll be guessing the word chosen by your opponent.");
             player2.sendMessage(" You'll be setting a word for your opponent to guess.");
             sendToAllPlayers("------------------------------------------------------\r\n");
         }
@@ -158,7 +156,10 @@ class Game {
 
         String hangerBottom = Prints.hangBox();
         for (Character letter : charsUsed) {
-            hangerBottom = hangerBottom.replaceFirst("(==)", letter + " ");
+            // Put letters already chosen on hanger bottom
+            hangerBottom = hangerBottom.replaceFirst("(\\*\\*)", letter + " ");
+            // Put correspondent right / wrong guess of that letter on hanger bottom
+            hangerBottom = hangerBottom.replaceFirst("(==)", wordToGuess.contains(letter.toString()) ? "v " : "x ");
         }
 
         updateGraphics("\r\n\r\n\r\n" + hangerTop + hangerBottom);
@@ -167,17 +168,13 @@ class Game {
 
     private void updateGraphics(String strSrc)
     {
-        for (Player player : players) {
-            player.updatePlayerGraphics(strSrc);
-        }
+        for (Player player : players) { player.updatePlayerGraphics(strSrc); }
     }
 
 
     private void sendToAllPlayers(String str)
     {
-        for (Player player : players) {
-            player.sendMessage(str);
-        }
+        for (Player player : players) { player.sendMessage(str); }
     }
 
 
@@ -221,10 +218,4 @@ class Game {
         }
     }
 
-    /*
-    private void sendToAllPlayersInline(String str) {
-        for (Player player : players) {
-            player.sendMessageInline(str);
-        }
-    }*/
 }

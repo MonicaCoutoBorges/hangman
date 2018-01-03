@@ -13,12 +13,12 @@ class Player {
     //METHODS
     String setWordToGuess()
     {
-        return ch.chooseStringToGuess(" Please enter the word to be guessed by your opponent:");
+        return ch.chooseStringToGuess(" Please enter a word. Guessing that word will be your opponent's challenge.");
     }
 
     String chooseChar()
     {
-        return ch.chooseLetter("\r\n\r\n Next letter to guess:");
+        return ch.chooseLetter("\r\n\r\n Type a letter to guess:");
     }
 
     void sendMessage(String message)
@@ -30,9 +30,5 @@ class Player {
     {
         ch.updateGraphics(strSrc);
     }
-
-    /*
-    void sendMessageInline(String message){ ch.sendMessageToPlayerInline(message); }
-    */
 
 }

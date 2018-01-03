@@ -93,7 +93,8 @@ class Prints {
                 "  /         ||                          /|	    \r\n" +
                 " /_____________________________________/ |	    \r\n" +
                 " |-------------------------------------| |	    \r\n" +
-                " | =================================== | /	    \r\n" +
+                " | *********************************** | |	    \r\n" +
+                " | =================================== | /     \r\n" +
                 " |_____________________________________|/	    \r\n";
     }
 
@@ -107,17 +108,17 @@ class Prints {
 
     static String gameWinner()
     {
-        return "\r\n\r\n    >>> Congratulations, you have won the game! <<<";
+        return "\r\n\r\n    >>> Congratulations, you have won the game! Now go grab yourself a beer! <<<";
     }
 
     static String gameLoser()
     {
-        return "\r\n\r\n          >>> Sorry, you have lost the game! <<<";
+        return "\r\n\r\n          >>> My condolences, you have lost the game! Don't be sad though! There's knowledge in every defeat!<<<";
     }
 
     static String gameDraw()
     {
-        return "\r\n\r\n >>> Game result is a Draw. Everybody is a winner! <<<";
+        return "\r\n\r\n >>> It's a Draw! On the bright side.... Everybody is a winner! Hurray!<<<";
     }
 
 }
