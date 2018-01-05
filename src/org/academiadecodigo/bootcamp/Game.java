@@ -20,7 +20,7 @@ class Game {
         SoundEffects.theme();
 
         while (numberOfRounds != 4) {
-            start();    //start new round
+            start();
             numberOfRounds++;
             resetForNextRound();
         }
@@ -45,12 +45,9 @@ class Game {
         while (numberOfMissesLeft > 0 && !hasWonRound) {
             String strEntered = "";
 
-            //strEntered = player2.chooseChar();
-            //char character = strEntered.charAt(0);
             char character = getUsedChars(player2);
 
             charsUsed.add(character);
-            //updateHanger();
 
             if (!compareWords(character)) {
                 numberOfMissesLeft -=1;
@@ -72,7 +69,7 @@ class Game {
             victories[Math.abs(activePlayerIndex - 1)]++;
             player2.sendMessage("\r\n ::: Fuck. You lost this round! :::");
             player1.sendMessage("\r\n ::: Yeeaahh! Your opponent failed miserably on this round. :::");
-            player2.sendMessage("\r\n ::: The word was \u001B[33m" + wordToGuess + " \u001B[37m:::");
+            player2.sendMessage("\r\n ::: The word was \u001B[33m" + wordToGuess + " \u001B[30m:::");
             SoundEffects.hang();
         }
 
@@ -208,7 +205,7 @@ class Game {
         } else {
             sendToAllPlayers(Prints.gameDraw());
         }
-        sendToAllPlayers("         \u001B[30m.-\"-.\r\n       .'=^=^='.\r\n      /=^=^=^=^=\\\r\n     :^= HAPPY =^;\r\n     |^ EASTER! ^|\r\n     :^=^=^=^=^=^:\r\n      \\=^=^=^=^=/\r\n       `.=^=^=.'\r\n         `~~~`\u001B[37m");
+        sendToAllPlayers("         \u001B[37m.-\"-.\r\n       .'=^=^='.\r\n      /=^=^=^=^=\\\r\n     :^= HAPPY =^;\r\n     |^ EASTER! ^|\r\n     :^=^=^=^=^=^:\r\n      \\=^=^=^=^=/\r\n       `.=^=^=.'\r\n         `~~~`\u001B[37m");
     }
 
 
@@ -221,10 +218,4 @@ class Game {
         }
     }
 
-    /*
-    private void sendToAllPlayersInline(String str) {
-        for (Player player : players) {
-            player.sendMessageInline(str);
-        }
-    }*/
 }
