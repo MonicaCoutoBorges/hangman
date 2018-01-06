@@ -43,14 +43,11 @@ class Game {
         substituteWordCharacters();
 
         while (numberOfMissesLeft > 0 && !hasWonRound) {
-            String strEntered = "";
-
             char character = getUsedChars(player2);
-
             charsUsed.add(character);
 
             if (!compareWords(character)) {
-                numberOfMissesLeft -=1;
+                numberOfMissesLeft--;
                 SoundEffects.wrongAttempt();
             }
             else{
@@ -155,7 +152,10 @@ class Game {
 
         String hangerBottom = Prints.hangBox();
         for (Character letter : charsUsed) {
-            hangerBottom = hangerBottom.replaceFirst("(==)", letter + " ");
+            // Put letters already chosen on hanger bottom
+            hangerBottom = hangerBottom.replaceFirst("(\\*\\*)", letter + " ");
+            // Put correspondent right / wrong guess of that letter on hanger bottom
+            hangerBottom = hangerBottom.replaceFirst("(==)", wordToGuess.contains(letter.toString()) ? "v " : "x ");
         }
 
         updateGraphics("\r\n\r\n\r\n" + hangerTop + hangerBottom);
